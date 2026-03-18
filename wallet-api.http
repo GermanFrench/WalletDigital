@@ -1,0 +1,73 @@
+@baseUrl = http://localhost:8080
+@token = pega_aqui_tu_jwt
+@sourceAccountId = pega_aqui_source_id
+@destinationAccountId = pega_aqui_destination_id
+
+### Health
+GET {{baseUrl}}/health
+
+### Login
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@wallet.local",
+  "password": "ChangeMe123!"
+}
+
+### Crear cuenta origen
+POST {{baseUrl}}/api/accounts
+Content-Type: application/json
+
+{
+  "name": "Alice",
+  "email": "alice@example.com",
+  "currency": "USD"
+}
+
+### Crear cuenta destino
+POST {{baseUrl}}/api/accounts
+Content-Type: application/json
+
+{
+  "name": "Bob",
+  "email": "bob@example.com",
+  "currency": "USD"
+}
+
+### Consultar cuenta origen (protegido)
+GET {{baseUrl}}/api/accounts/{{sourceAccountId}}
+Authorization: Bearer {{token}}
+
+### Depositar en cuenta origen (protegido)
+POST {{baseUrl}}/api/accounts/{{sourceAccountId}}/deposit
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "amount": 200.00
+}
+
+### Retirar de cuenta origen (protegido)
+POST {{baseUrl}}/api/accounts/{{sourceAccountId}}/withdraw
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "amount": 50.00
+}
+
+### Transferir de origen a destino (protegido)
+POST {{baseUrl}}/api/accounts/{{sourceAccountId}}/transfer
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "destinationAccountId": "{{destinationAccountId}}",
+  "amount": 25.00
+}
+
+### Consultar cuenta destino (protegido)
+GET {{baseUrl}}/api/accounts/{{destinationAccountId}}
+Authorization: Bearer {{token}}
+

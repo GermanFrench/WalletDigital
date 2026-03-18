@@ -1,0 +1,307 @@
+{
+  "info": {
+    "name": "wallet-core API",
+    "description": "Coleccion para probar autenticacion JWT y operaciones de cuentas.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "health"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Auth - Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const jsonData = pm.response.json();",
+              "if (jsonData.accessToken) {",
+              "  pm.collectionVariables.set('token', jsonData.accessToken);",
+              "}"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"admin@wallet.local\",\n  \"password\": \"ChangeMe123!\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/login",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Accounts - Crear origen",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const jsonData = pm.response.json();",
+              "if (jsonData.id) {",
+              "  pm.collectionVariables.set('sourceAccountId', jsonData.id);",
+              "}"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Alice\",\n  \"email\": \"alice@example.com\",\n  \"currency\": \"USD\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/accounts",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "accounts"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Accounts - Crear destino",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const jsonData = pm.response.json();",
+              "if (jsonData.id) {",
+              "  pm.collectionVariables.set('destinationAccountId', jsonData.id);",
+              "}"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Bob\",\n  \"email\": \"bob@example.com\",\n  \"currency\": \"USD\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/accounts",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "accounts"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Accounts - Consultar origen",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/accounts/{{sourceAccountId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "accounts",
+            "{{sourceAccountId}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Accounts - Depositar origen",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"amount\": 200.00\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/accounts/{{sourceAccountId}}/deposit",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "accounts",
+            "{{sourceAccountId}}",
+            "deposit"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Accounts - Retirar origen",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"amount\": 50.00\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/accounts/{{sourceAccountId}}/withdraw",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "accounts",
+            "{{sourceAccountId}}",
+            "withdraw"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Accounts - Transferir origen -> destino",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"destinationAccountId\": \"{{destinationAccountId}}\",\n  \"amount\": 25.00\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/accounts/{{sourceAccountId}}/transfer",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "accounts",
+            "{{sourceAccountId}}",
+            "transfer"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Accounts - Consultar destino",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/accounts/{{destinationAccountId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "accounts",
+            "{{destinationAccountId}}"
+          ]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "sourceAccountId",
+      "value": ""
+    },
+    {
+      "key": "destinationAccountId",
+      "value": ""
+    }
+  ]
+}
+
