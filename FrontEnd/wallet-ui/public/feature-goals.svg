@@ -1,0 +1,19 @@
+<svg width="800" height="520" viewBox="0 0 800 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg3" x1="80" y1="46" x2="724" y2="476" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#111827"/>
+      <stop offset="1" stop-color="#0F766E"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="520" rx="32" fill="url(#bg3)"/>
+  <rect x="96" y="84" width="608" height="352" rx="24" fill="#FFFFFF" fill-opacity="0.1"/>
+  <rect x="140" y="140" width="520" height="34" rx="17" fill="#E2E8F0" fill-opacity="0.25"/>
+  <rect x="140" y="140" width="340" height="34" rx="17" fill="#34D399"/>
+  <rect x="140" y="204" width="520" height="34" rx="17" fill="#E2E8F0" fill-opacity="0.25"/>
+  <rect x="140" y="204" width="250" height="34" rx="17" fill="#22D3EE"/>
+  <rect x="140" y="268" width="520" height="34" rx="17" fill="#E2E8F0" fill-opacity="0.25"/>
+  <rect x="140" y="268" width="410" height="34" rx="17" fill="#A7F3D0"/>
+  <circle cx="640" cy="156" r="10" fill="#10B981"/>
+  <circle cx="640" cy="220" r="10" fill="#06B6D4"/>
+  <circle cx="640" cy="284" r="10" fill="#6EE7B7"/>
+</svg>
